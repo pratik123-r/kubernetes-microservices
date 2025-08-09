@@ -1,0 +1,7 @@
+version: "3.8"
+services:
+  product-service:
+    build: .
+    container_name: product-service
+    ports:
+      - "4005:4005"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service # kubectl get deployment order-service (1. This is the name of the Deployment object itself (not the pods).  2. Does not directly link to the Service — linking happens via labels.)
+  namespace: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service # This should be same as template.metadata.labels.app. I will manage only the attendees who have a badge that says app=order-service. Whenever I create a new attendee (Pod), I will give them a badge that says app=order-service.
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: auth-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REDIS_URL
+              value: redis://host.docker.internal:6379

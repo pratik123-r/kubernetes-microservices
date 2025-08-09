@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: auth
+spec:
+  selector:
+    app: auth-service
+  ports:
+    - protocol: TCP
+      port: 3000 # this post is used to call service internally like - http://auth-service:3000
+      targetPort: 3000 # exposed docker container port 
+  type: NodePort
+
+
+# metadata:
+#   name: auth-service
+
+# Gives the Service a unique identifier in the namespace - kubectl get service auth-service - kubectl describe service auth-service
+
+# Becomes the DNS hostname for accessing the Service inside the cluster - http://auth-service or http://auth-service.default.svc.cluster.local
+
+# auth-service = service name
+# default = namespace
+# svc = tells DNS it’s a Kubernetes service
+# cluster.local = your cluster’s local domain
+
+
+#protocol	- The network protocol used. Most services use TCP. You can also use UDP if your application needs it.
+#port -	The port number exposed by the Service inside the cluster. Other Pods/services inside the cluster connect to this port on the Service.
+#targetPort - The port on the Pod/container that the Service will forward traffic to. Usually matches the port your app listens on. It can be a number or the name of a port defined in the container.
+
+# A client inside the cluster connects to the Service at auth-service:3000 (the Service port).
+# Kubernetes routes the request to one of the Pods selected by the Service (using the selector), 
+# forwarding the request to the Pod's container at targetPort (here, 3000).
+

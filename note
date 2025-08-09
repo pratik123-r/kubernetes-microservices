@@ -1,0 +1,26 @@
+eval $(minikube docker-env)   # if not already done
+docker build -t auth-service:latest .
+
+
+kubectl apply -f auth-service-deployment.yaml
+
+kubectl get pods -l app=auth-service
+kubectl logs <pod-name>
+kubectl describe pod <pod-name>
+
+
+
+#incase of code change
+# 1. Build image inside Minikube
+eval $(minikube docker-env)
+docker build -t auth-service:latest .
+
+# 2. Restart deployment to load new image
+kubectl rollout restart deployment auth-service -n auth
+
+
+minikube addons enable ingress
+
+kubectl get pods --all-namespaces | grep order
+
+kubectl logs -n auth auth-service-64d89d646b-mbtpz -f
