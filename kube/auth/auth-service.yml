@@ -8,7 +8,7 @@ spec:
     app: auth-service
   ports:
     - protocol: TCP
-      port: 3000 # this post is used to call service internally like - http://auth-service:3000
+      port: 4000 # this post is used to call service internally like - http://auth-service:3000
       targetPort: 3000 # exposed docker container port 
   type: NodePort
 
