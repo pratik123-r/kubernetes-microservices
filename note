@@ -24,3 +24,5 @@ minikube addons enable ingress
 kubectl get pods --all-namespaces | grep order
 
 kubectl logs -n auth auth-service-64d89d646b-mbtpz -f
+
+kubectl port-forward -n ingress-nginx svc/ingress-nginx-controller 8080:80
